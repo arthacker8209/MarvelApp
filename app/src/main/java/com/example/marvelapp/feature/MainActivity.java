@@ -1,8 +1,8 @@
-package com.example.marvelapp;
+package com.example.marvelapp.feature;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import com.example.marvelapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
