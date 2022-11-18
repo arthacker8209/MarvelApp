@@ -1,0 +1,1 @@
+package com.example.marvelapp.data.callbacks;import com.example.marvelapp.data.model.Character;import java.util.List;public interface LoadCharacterCallback {    void onSuccess(List<Character> characters);    void onError(Error error);}
