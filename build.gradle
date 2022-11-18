@@ -8,6 +8,8 @@ buildscript {
         glideVersion = '4.13.2'
         roomVersion = "2.4.3"
         lifecycle_version = "2.6.0-alpha03"
+        rxJavaVersion = "3.0.7"
+        rxAndroidVersion = "3.0.0"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltLibVersion"

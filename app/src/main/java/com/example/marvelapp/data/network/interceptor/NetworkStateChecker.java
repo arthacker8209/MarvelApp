@@ -1,0 +1,1 @@
+package com.example.marvelapp.data.network.interceptor;public interface NetworkStateChecker {    boolean isNetworkAvailable();}

@@ -1,0 +1,1 @@
+package com.example.marvelapp.data.network.service;public interface MarvelApiService {}
