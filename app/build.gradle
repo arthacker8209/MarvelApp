@@ -94,4 +94,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.6.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+
+    //splash api
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 }
