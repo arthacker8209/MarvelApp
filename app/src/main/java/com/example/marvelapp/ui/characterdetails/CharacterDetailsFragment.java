@@ -122,7 +122,7 @@ public class CharacterDetailsFragment extends Fragment implements OnClickListene
                 if(!mViewModel.databaseDisposableObserver.isDisposed()){
                     mViewModel.disposeElements();
                 }
-                requireActivity().finish();
+                requireActivity().onBackPressed();
             }
         });
     }

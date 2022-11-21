@@ -191,7 +191,7 @@ public class CharactersFragment extends Fragment implements OnClickListener, OnB
                     if(!viewModel.databaseDisposableObserver.isDisposed() && !viewModel.networkDisposableObserver.isDisposed()){
                         viewModel.disposeElements();
                     }
-                    requireActivity().finish();
+                    requireActivity().onBackPressed();
                 }
             });
         }
