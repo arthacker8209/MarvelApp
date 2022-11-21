@@ -1,0 +1,1 @@
+package com.example.marvelapp.ui.listeners;import com.example.marvelapp.data.model.Character;import com.example.marvelapp.data.model.Comics;public interface OnClickListener {    void onCharacterClicked(Character character);}

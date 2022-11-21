@@ -7,7 +7,7 @@ buildscript {
         hiltLibVersion = "2.42"
         glideVersion = '4.13.2'
         roomVersion = "2.4.3"
-        lifecycle_version = "2.6.0-alpha03"
+        lifecycle_version = "2.5.1"
         rxJavaVersion = "3.0.7"
         rxAndroidVersion = "3.0.0"
     }

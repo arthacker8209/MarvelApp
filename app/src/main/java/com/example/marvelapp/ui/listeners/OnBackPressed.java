@@ -1,0 +1,1 @@
+package com.example.marvelapp.ui.listeners;public interface OnBackPressed {    void handleOnBackPressed();}

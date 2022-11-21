@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/activity_main.xml" value="0.14375" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/drawable/character_image_corner.xml" value="0.1" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/drawable/character_item_background.xml" value="0.12" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/drawable/characterdetailsimagebackground.xml" value="0.12" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/drawable/scrollbar.xml" value="0.12" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/character_item.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/comics_item.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/fragment_character.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Trell/AndroidStudioProjects/MarvelApp/app/src/main/res/layout/fragment_character_details.xml" value="0.15364583333333334" />
       </map>
     </option>
   </component>
