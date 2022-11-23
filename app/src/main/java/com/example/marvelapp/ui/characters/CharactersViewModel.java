@@ -2,7 +2,6 @@ package com.example.marvelapp.ui.characters;
 
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -21,6 +20,12 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -40,13 +45,75 @@ public class CharactersViewModel extends ViewModel {
     private MutableLiveData<String> charactersError = new MutableLiveData<String>();
     private MutableLiveData<Boolean> characterLoading = new MutableLiveData<Boolean>();
     private MutableLiveData<Boolean> swipeRefreshLayoutLiveData = new MutableLiveData<Boolean>();
+    private MutableLiveData<List<Character>> searchCharacterFromDb = new MutableLiveData<List<Character>>();
+
+
+
+    private MutableLiveData<String> errorSearchCharacterFromDb = new MutableLiveData<String>();
 
     LiveData<List<Character>> charactersListLiveData = getCharactersResult();
+    LiveData<List<Character>> searchCharacterFromDbLiveData = getSearchCharacterFromDb();
+    LiveData<String> errorSearchCharacterFromDbLiveData = getErrorSearchCharacterFromDb();
     LiveData<Boolean> progressBarLiveData = getCharacterLoading();
     LiveData<Boolean> _swipeRefreshLayoutLiveData = getSwipeRefreshLayoutLiveData();
     DisposableObserver<List<Character>> databaseDisposableObserver ;
     DisposableObserver<CharacterDataWrapper> networkDisposableObserver ;
+    DisposableObserver<List<Character>> databaseSearcherDisposableObserver ;
 
+
+//    public void search(String query) {
+//        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
+//                emitter.onNext(query);
+//            }
+//        });
+//        observable.subscribeOn(Schedulers.io())
+//                .debounce(2,TimeUnit.SECONDS)
+//                .doOnNext( c->{
+//                    Log.d("CharactersViewModel", "upstream"+c);
+//                        }
+//                )
+//                .distinctUntilChanged()
+//                .subscribe(o -> {
+//                           repository.getSearchResultsFromDB(query)
+//                                   .subscribeOn(Schedulers.io())
+//                                   .observeOn(AndroidSchedulers.mainThread())
+//                                   .subscribe(
+//                                           c-> searchCharacterFromDb.postValue(c),
+//                                           d-> errorSearchCharacterFromDb.postValue(d.getMessage())
+//                                   );
+//                        }
+//
+//                );
+
+    public void searchCharacterFromDb(String query){
+        characterLoading.postValue(true);
+        databaseSearcherDisposableObserver = new DisposableObserver<List<Character>>() {
+            @Override
+            public void onNext(@NonNull List<Character> characters) {
+                characterLoading.postValue(false);
+                searchCharacterFromDb.postValue(characters);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                characterLoading.postValue(false);
+                errorSearchCharacterFromDb.postValue(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+        repository.getSearchResultsFromDB(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                       databaseSearcherDisposableObserver
+                );
+    }
 
     private void loadCharacters(){
         characterLoading.postValue(true);
@@ -102,10 +169,12 @@ public class CharactersViewModel extends ViewModel {
     }
 
 
-
-    public void disposeElements(){
-        if(null != databaseDisposableObserver && !databaseDisposableObserver.isDisposed()) databaseDisposableObserver.dispose();
-        if(null != networkDisposableObserver && !networkDisposableObserver.isDisposed()) networkDisposableObserver.dispose();
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        databaseSearcherDisposableObserver.dispose();
+        databaseDisposableObserver.dispose();
+        networkDisposableObserver.dispose();
     }
 
     public void resetValuesLiveData() {
@@ -141,5 +210,13 @@ public class CharactersViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getSwipeRefreshLayoutLiveData() {
         return swipeRefreshLayoutLiveData;
+    }
+
+    public MutableLiveData<List<Character>> getSearchCharacterFromDb() {
+        return searchCharacterFromDb;
+    }
+
+    public MutableLiveData<String> getErrorSearchCharacterFromDb() {
+        return errorSearchCharacterFromDb;
     }
 }

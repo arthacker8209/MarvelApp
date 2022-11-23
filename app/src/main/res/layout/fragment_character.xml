@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.characters.CharactersFragment">
+    tools:context=".ui.characters.CharactersFragment"
+    android:orientation="vertical"
+    >
 
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marvel"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:textColor="#FF1414"
+        android:fontFamily="@font/marvel_bold"
+        >
+
+    </TextView>
+    <EditText
+        android:id="@+id/etxt_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_etxt"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawablePadding="16sp"
+        android:fontFamily="@font/marvel"
+        android:hint="@string/search_by_character_name"
+        android:lines="1"
+        android:paddingStart="12sp"
+        android:paddingEnd="12sp"
+        android:textColor="@color/black"
+        android:textColorHint="#939191"
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appTitle"
         >
 
         <androidx.recyclerview.widget.RecyclerView
@@ -39,25 +67,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="visible"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/swipeRefreshLayout" />
-
-
-    <TextView
-        android:id="@+id/appTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Marvel"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:textColor="#FF1414"
-        android:fontFamily="@font/marvel_bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/swipeRefreshLayout"
-        >
-
-    </TextView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.marvelapp.ui.characters;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Observable;
 
 @AndroidEntryPoint
 public class CharactersFragment extends Fragment implements OnClickListener, OnBackPressed {
@@ -62,8 +67,31 @@ public class CharactersFragment extends Fragment implements OnClickListener, OnB
         updateSwipeRefreshLayoutForUI();
         handleOnBackPressed();
         viewModel.fetchCharacters(offset);
+        searchCharacter();
+        observeSearchResult();
 
 
+    }
+
+    private void searchCharacter() {
+        binding.etxtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!charSequence.toString().isEmpty()){
+                    viewModel.searchCharacterFromDb(charSequence.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void updateDataForUI(){
@@ -153,12 +181,13 @@ public class CharactersFragment extends Fragment implements OnClickListener, OnB
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(!viewModel.databaseDisposableObserver.isDisposed() && !viewModel.networkDisposableObserver.isDisposed()){
-            viewModel.disposeElements();
-        }
+    private void observeSearchResult(){
+        viewModel.searchCharacterFromDbLiveData.observe(getViewLifecycleOwner(), new Observer<List<Character>>() {
+            @Override
+            public void onChanged(List<Character> characters) {
+                charactersAdapter.submitList(characters);
+            }
+        });
     }
 
     @Override
@@ -188,9 +217,6 @@ public class CharactersFragment extends Fragment implements OnClickListener, OnB
                 @Override
                 public void handleOnBackPressed() {
                     viewModel.resetValuesLiveData();
-                    if(!viewModel.databaseDisposableObserver.isDisposed() && !viewModel.networkDisposableObserver.isDisposed()){
-                        viewModel.disposeElements();
-                    }
                     requireActivity().onBackPressed();
                 }
             });
